@@ -137,12 +137,11 @@ if __name__ == '__main__':
             verbose=True
         )
         model.save(f'{run_dir}/model.pkl')
+        t = time.time() - t
+        print(f"\nTraining time: {datetime.timedelta(seconds=t)}\n")
     else:
         # load the whole model directly from the directory for the second dataset
         model = torch.load(f'{model_dir}/model.pkl')
-
-    t = time.time() - t
-    print(f"\nTraining time: {datetime.timedelta(seconds=t)}\n")
 
     if args.eval:
         if task_type == 'classification':
