@@ -96,9 +96,9 @@ class TS2Vec:
             n_epoch_iters = 0
             interrupted = False
             for batch in train_loader:
-                if n_iters is not None and self.n_iters >= n_iters:
-                    interrupted = True
-                    break
+#                 if n_iters is not None and self.n_iters >= n_iters:
+#                     interrupted = True
+#                     break
                 
                 x = batch[0]
                 if self.max_train_length is not None and x.size(1) > self.max_train_length:
@@ -117,8 +117,6 @@ class TS2Vec:
                 optimizer.zero_grad()
                 
                 out1 = self._net(take_per_row(x, crop_offset + crop_eleft, crop_right - crop_eleft))
-                print(out1.shape)
-                exit(1)
                 out1 = out1[:, -crop_l:]
                 
                 out2 = self._net(take_per_row(x, crop_offset + crop_left, crop_eright - crop_left))
@@ -141,8 +139,8 @@ class TS2Vec:
                 
                 if self.after_iter_callback is not None:
                     self.after_iter_callback(self, loss.item())
-            if interrupted:
-                break
+#             if interrupted:
+#                 break
             
             cum_loss /= n_epoch_iters
             loss_log.append(cum_loss)
