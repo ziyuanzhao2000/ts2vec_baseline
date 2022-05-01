@@ -22,7 +22,7 @@ class TS2Vec:
         max_train_length=None,
         temporal_unit=0,
         after_iter_callback=None,
-        after_epoch_callback=None
+        after_epoch_callback=None,
         pretrained_net=None
     ):
         ''' Initialize a TS2Vec model.
