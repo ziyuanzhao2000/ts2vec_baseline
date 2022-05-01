@@ -44,7 +44,7 @@ def eval_classification(model, train_data, train_labels, test_data, test_labels,
 
     metrics_dict = {}
     pred_prob = y_score
-    pred = pred_prob.argmax(dim=1)
+    pred = pred_prob.argmax(axis=1)
     target = test_labels
     target_prob = test_labels_onehot
     metrics_dict['Acc'] = sklearn.metrics.accuracy_score(target, pred)
