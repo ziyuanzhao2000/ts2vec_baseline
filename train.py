@@ -142,7 +142,7 @@ if __name__ == '__main__':
         t = time.time() - t
         print(f"\nTraining time: {datetime.timedelta(seconds=t)}\n")
     else:
-        torch_model = TSEncoder(input_dims=train_data.shape[-1])
+        torch_model = TSEncoder(input_dims=train_data.shape[-1],output_dims=repr_dims)
         # load the whole model directly from the directory for the second dataset
         torch_model.load_state_dict(torch.load(f'{model_dir}/model.pkl'))
         torch_model.eval()
