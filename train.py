@@ -51,7 +51,8 @@ if __name__ == '__main__':
     if args.loader == 'UCR':
         task_type = 'classification'
         train_data, train_labels, test_data, test_labels = datautils.load_UCR(args.dataset)
-        
+        print(train_data.shape, train_labels.shape, test_data.shape, test_labels.shape)
+        exit(1)
     elif args.loader == 'UEA':
         task_type = 'classification'
         train_data, train_labels, test_data, test_labels = datautils.load_UEA(args.dataset)
