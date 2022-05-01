@@ -12,9 +12,9 @@ import numpy as np
 
 def load_baseline(dataset):
     train_input = np.transpose(np.load(os.path.join('datasets', dataset, 'train_input.npy')), axes=(0,2,1)) # window_len and num_channels dim are exchanged
-    train_output = np.load(os.path.join('datasets', dataset, 'train_output.npy'))
+    train_output = np.load(os.path.join('datasets', dataset, 'train_output.npy'))[:,0]
     test_input = np.transpose(np.load(os.path.join('datasets', dataset, 'test_input.npy')), axes=(0,2,1))
-    test_output = np.load(os.path.join('datasets', dataset, 'test_output.npy'))
+    test_output = np.load(os.path.join('datasets', dataset, 'test_output.npy'))[:,0]
     return train_input, train_output, test_input, test_output
 
 def load_UCR(dataset):
