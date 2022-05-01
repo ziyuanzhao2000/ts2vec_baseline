@@ -93,7 +93,7 @@ if __name__ == '__main__':
     # the data are read directly from preprocessed numpy files, available upon request
     elif args.loader == 'baseline':
         train_data, train_labels, test_data, test_labels = datautils.load_baseline(args.dataset)
-
+        print(train_data.shape)
     else:
         raise ValueError(f"Unknown loader {args.loader}.")
         

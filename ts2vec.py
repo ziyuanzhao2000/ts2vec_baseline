@@ -56,7 +56,7 @@ class TS2Vec:
         
         self.n_epochs = 0
         self.n_iters = 0
-    
+        print('Finish initing ts2vec model!')
     def fit(self, train_data, n_epochs=None, n_iters=None, verbose=False):
         ''' Training the TS2Vec model.
         
@@ -70,28 +70,28 @@ class TS2Vec:
             loss_log: a list containing the training losses on each epoch.
         '''
         assert train_data.ndim == 3
-        
+        print(1)
         if n_iters is None and n_epochs is None:
             n_iters = 200 if train_data.size <= 100000 else 600  # default param for n_iters
-        
+        print(2)
         if self.max_train_length is not None:
             sections = train_data.shape[1] // self.max_train_length
             if sections >= 2:
                 train_data = np.concatenate(split_with_nan(train_data, sections, axis=1), axis=0)
-
+        print(3)
         temporal_missing = np.isnan(train_data).all(axis=-1).any(axis=0)
         if temporal_missing[0] or temporal_missing[-1]:
             train_data = centerize_vary_length_series(train_data)
-                
+        print(4)
         train_data = train_data[~np.isnan(train_data).all(axis=2).all(axis=1)]
-        
+        print(5)
         train_dataset = TensorDataset(torch.from_numpy(train_data).to(torch.float))
         train_loader = DataLoader(train_dataset, batch_size=min(self.batch_size, len(train_dataset)), shuffle=True, drop_last=True)
-        
+        print(6)
         optimizer = torch.optim.AdamW(self._net.parameters(), lr=self.lr)
         
         loss_log = []
-        
+        print(7)
         while True:
             if n_epochs is not None and self.n_epochs >= n_epochs:
                 break
