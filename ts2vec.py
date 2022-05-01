@@ -90,16 +90,12 @@ class TS2Vec:
         
         loss_log = []
         while True:
-            print('looping start')
             if n_epochs is not None and self.n_epochs >= n_epochs:
                 break
-            print(1)
             cum_loss = 0
             n_epoch_iters = 0
-            print(2)
             interrupted = False
             for batch in train_loader:
-                print('inner looping starts')
                 if n_iters is not None and self.n_iters >= n_iters:
                     interrupted = True
                     break
