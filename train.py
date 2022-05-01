@@ -142,8 +142,7 @@ if __name__ == '__main__':
         print(f"\nTraining time: {datetime.timedelta(seconds=t)}\n")
     else:
         # load the whole model directly from the directory for the second dataset
-        checkpoint = torch.load(f'{model_dir}/model.pkl')
-        model.load_state_dict(checkpoint['state_dict'])
+        model.load_state_dict(torch.load(f'{model_dir}/model.pkl'))
         model.eval()
 
     if args.eval:
