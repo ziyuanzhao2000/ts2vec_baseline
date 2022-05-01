@@ -125,12 +125,12 @@ if __name__ == '__main__':
     
     t = time.time()
 
-    if args.train:
-        model = TS2Vec(
+    model = TS2Vec(
             input_dims=train_data.shape[-1],
             device=device,
             **config
         )
+    if args.train:
         loss_log = model.fit(
             train_data,
             n_epochs=args.epochs,
@@ -142,7 +142,9 @@ if __name__ == '__main__':
         print(f"\nTraining time: {datetime.timedelta(seconds=t)}\n")
     else:
         # load the whole model directly from the directory for the second dataset
-        model = torch.load(f'{model_dir}/model.pkl')
+        checkpoint = torch.load(f'{model_dir}/model.pkl')
+        model.load_state_dict(checkpoint['state_dict'])
+        model.eval()
 
     if args.eval:
         if task_type == 'classification':
