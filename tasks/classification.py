@@ -3,7 +3,8 @@ import sklearn
 from . import _eval_protocols as eval_protocols
 from sklearn.preprocessing import label_binarize
 from sklearn.metrics import average_precision_score
-
+import torch
+import torch.functional as F
 def eval_classification(model, train_data, train_labels, test_data, test_labels, eval_protocol='linear'):
     assert train_labels.ndim == 1 or train_labels.ndim == 2
     train_repr = model.encode(train_data, encoding_window='full_series' if train_labels.ndim == 1 else None)
@@ -34,10 +35,11 @@ def eval_classification(model, train_data, train_labels, test_data, test_labels,
         y_score = clf.predict_proba(test_repr)
     else:
         y_score = clf.decision_function(test_repr)
-    print(train_labels.max())
-    print(train_labels)
-    test_labels_onehot = label_binarize(test_labels, classes=np.arange(train_labels.max()+1))
-    print(test_labels_onehot)
+#     print(train_labels.max())
+#     print(train_labels)
+#     test_labels_onehot = label_binarize(test_labels, classes=np.arange(train_labels.max()+1))
+    test_labels_onehot = (F.one_hot(torch.tensor(target), num_classes=train_labels.max()+1)).numpy()
+#     print(test_labels_onehot)
 #     auprc = average_precision_score(test_labels_onehot, y_score)
     print(test_labels_onehot.shape, y_score.shape)
     exit(1)
