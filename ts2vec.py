@@ -117,6 +117,8 @@ class TS2Vec:
                 optimizer.zero_grad()
                 
                 out1 = self._net(take_per_row(x, crop_offset + crop_eleft, crop_right - crop_eleft))
+                print(out1.shape)
+                exit(1)
                 out1 = out1[:, -crop_l:]
                 
                 out2 = self._net(take_per_row(x, crop_offset + crop_left, crop_eright - crop_left))
