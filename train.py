@@ -138,7 +138,7 @@ if __name__ == '__main__':
             n_iters=args.iters,
             verbose=True
         )
-        model.save(f'{run_dir}/model.pkl')
+        model._net.save(f'{run_dir}/model.pkl')
         t = time.time() - t
         print(f"\nTraining time: {datetime.timedelta(seconds=t)}\n")
     else:

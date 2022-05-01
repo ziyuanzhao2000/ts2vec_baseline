@@ -1,4 +1,5 @@
 import numpy as np
+import sklearn
 from . import _eval_protocols as eval_protocols
 from sklearn.preprocessing import label_binarize
 from sklearn.metrics import average_precision_score
@@ -35,5 +36,15 @@ def eval_classification(model, train_data, train_labels, test_data, test_labels,
         y_score = clf.decision_function(test_repr)
     test_labels_onehot = label_binarize(test_labels, classes=np.arange(train_labels.max()+1))
     auprc = average_precision_score(test_labels_onehot, y_score)
-    
+    metrics_dict = {}
+    pred_prob = y_score
+    pred = pred_prob.argmax(dim=1)
+    target = test_labels
+    target_prob = test_labels_onehot
+    metrics_dict['Precision'] = sklearn.metrics.precision_score(target, pred, average='macro')
+    metrics_dict['Recall'] = sklearn.metrics.recall_score(target, pred, average='macro')
+    metrics_dict['F1'] = sklearn.metrics.f1_score(target, pred, average='macro')
+    metrics_dict['AUROC'] = sklearn.metrics.roc_auc_score(target_prob, pred_prob, multi_class='ovr')
+    metrics_dict['AUPRC'] = sklearn.metrics.average_precision_score(target_prob, pred_prob)
+    print(metrics)
     return y_score, { 'acc': acc, 'auprc': auprc }
