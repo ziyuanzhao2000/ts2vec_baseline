@@ -92,6 +92,7 @@ if __name__ == '__main__':
     # this case is added to handle our baseline experiments
     # the data are read directly from preprocessed numpy files, available upon request
     elif args.loader == 'baseline':
+        task_type = 'classification'
         train_data, train_labels, test_data, test_labels = datautils.load_baseline(args.dataset)
         print(train_data.shape)
     else:
