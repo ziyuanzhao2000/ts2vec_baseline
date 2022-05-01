@@ -4,7 +4,7 @@ from . import _eval_protocols as eval_protocols
 from sklearn.preprocessing import label_binarize
 from sklearn.metrics import average_precision_score
 import torch
-import torch.functional as F
+import torch.nn.functional as F
 def eval_classification(model, train_data, train_labels, test_data, test_labels, eval_protocol='linear'):
     assert train_labels.ndim == 1 or train_labels.ndim == 2
     train_repr = model.encode(train_data, encoding_window='full_series' if train_labels.ndim == 1 else None)
