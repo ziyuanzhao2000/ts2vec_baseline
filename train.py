@@ -111,7 +111,7 @@ if __name__ == '__main__':
         config[f'after_{unit}_callback'] = save_checkpoint_callback(args.save_every, unit)
 
     run_dir = 'training/' + args.dataset + '__' + name_with_datetime(args.run_name)
-    assert (not (args.dataset2=='' and args.train=False))
+    assert (not (args.dataset2=='' and args.train==False))
     model_dir = 'training/' + args.dataset2 + '__' + name_with_datetime(args.run_name)
     os.makedirs(run_dir, exist_ok=True)
     
