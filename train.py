@@ -24,7 +24,7 @@ def save_checkpoint_callback(
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('dataset', help='The dataset name')
-    parser.add_argument('dataset2', help='The second dataset')
+    parser.add_argument('dataset2', type=str, default='', help='The second dataset')
     parser.add_argument('run_name', help='The folder name used to save model, output and evaluation metrics. This can be set to any word')
     parser.add_argument('--loader', type=str, required=True, help='The data loader used to load the experimental data. This can be set to UCR, UEA, forecast_csv, forecast_csv_univar, anomaly, or anomaly_coldstart')
     parser.add_argument('--gpu', type=int, default=0, help='The gpu no. used for training and inference (defaults to 0)')
@@ -110,6 +110,7 @@ if __name__ == '__main__':
         config[f'after_{unit}_callback'] = save_checkpoint_callback(args.save_every, unit)
 
     run_dir = 'training/' + args.dataset + '__' + name_with_datetime(args.run_name)
+    assert (not (args.dataset2='' and args.train=False))
     model_dir = 'training/' + args.dataset2 + '__' + name_with_datetime(args.run_name)
     os.makedirs(run_dir, exist_ok=True)
     
