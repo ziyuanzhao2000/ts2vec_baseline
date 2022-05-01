@@ -24,8 +24,8 @@ def save_checkpoint_callback(
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('dataset', help='The dataset name')
-    parser.add_argument('dataset2', type=str, default='', help='The second dataset')
     parser.add_argument('run_name', help='The folder name used to save model, output and evaluation metrics. This can be set to any word')
+    parser.add_argument('--dataset2', type=str, default='', help='The second dataset')
     parser.add_argument('--loader', type=str, required=True, help='The data loader used to load the experimental data. This can be set to UCR, UEA, forecast_csv, forecast_csv_univar, anomaly, or anomaly_coldstart')
     parser.add_argument('--gpu', type=int, default=0, help='The gpu no. used for training and inference (defaults to 0)')
     parser.add_argument('--batch-size', type=int, default=8, help='The batch size (defaults to 8)')
