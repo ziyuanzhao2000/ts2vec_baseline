@@ -143,20 +143,16 @@ class TS2Vec:
                 
                 if self.after_iter_callback is not None:
                     self.after_iter_callback(self, loss.item())
-                print('inner looping ends')
             if interrupted:
                 break
             
             cum_loss /= n_epoch_iters
             loss_log.append(cum_loss)
-            print('verbose state is', verbose)
             if verbose:
                 print(f"Epoch #{self.n_epochs}: loss={cum_loss}")
             self.n_epochs += 1
-            print('post printout')
             if self.after_epoch_callback is not None:
                 self.after_epoch_callback(self, cum_loss)
-            print('looping ends')
         return loss_log
     
     def _eval_with_pooling(self, x, mask=None, slicing=None, encoding_window=None):
