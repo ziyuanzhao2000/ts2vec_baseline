@@ -41,8 +41,7 @@ def eval_classification(model, train_data, train_labels, test_data, test_labels,
     test_labels_onehot = (F.one_hot(torch.tensor(test_labels).long(), num_classes=int(train_labels.max()+1))).numpy()
 #     print(test_labels_onehot)
 #     auprc = average_precision_score(test_labels_onehot, y_score)
-    print(test_labels_onehot.shape, y_score.shape)
-    exit(1)
+
     metrics_dict = {}
     pred_prob = y_score
     pred = pred_prob.argmax(dim=1)
