@@ -3,6 +3,7 @@ import sklearn
 from . import _eval_protocols as eval_protocols
 from sklearn.preprocessing import label_binarize
 from sklearn.metrics import average_precision_score
+import sklearn.metrics
 import torch
 import torch.nn.functional as F
 def eval_classification(model, train_data, train_labels, test_data, test_labels, eval_protocol='linear'):
