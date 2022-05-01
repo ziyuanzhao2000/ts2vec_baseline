@@ -47,6 +47,7 @@ def eval_classification(model, train_data, train_labels, test_data, test_labels,
     pred = pred_prob.argmax(dim=1)
     target = test_labels
     target_prob = test_labels_onehot
+    metrics_dict['Acc'] = sklearn.metrics.accuracy_score(target, pred)
     metrics_dict['Precision'] = sklearn.metrics.precision_score(target, pred, average='macro')
     metrics_dict['Recall'] = sklearn.metrics.recall_score(target, pred, average='macro')
     metrics_dict['F1'] = sklearn.metrics.f1_score(target, pred, average='macro')
