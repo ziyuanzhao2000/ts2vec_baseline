@@ -23,6 +23,7 @@ class TS2Vec:
         temporal_unit=0,
         after_iter_callback=None,
         after_epoch_callback=None
+        pretrained_net=None
     ):
         ''' Initialize a TS2Vec model.
         
@@ -46,8 +47,11 @@ class TS2Vec:
         self.batch_size = batch_size
         self.max_train_length = max_train_length
         self.temporal_unit = temporal_unit
-        
-        self._net = TSEncoder(input_dims=input_dims, output_dims=output_dims, hidden_dims=hidden_dims, depth=depth).to(self.device)
+
+        if pretrained_net is None:
+            self._net = TSEncoder(input_dims=input_dims, output_dims=output_dims, hidden_dims=hidden_dims, depth=depth).to(self.device)
+        else:
+            self._net = pretrained_net
         self.net = torch.optim.swa_utils.AveragedModel(self._net)
         self.net.update_parameters(self._net)
         
