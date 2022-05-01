@@ -24,6 +24,7 @@ def save_checkpoint_callback(
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('dataset', help='The dataset name')
+    parser.add_argument('dataset2', help='The second dataset')
     parser.add_argument('run_name', help='The folder name used to save model, output and evaluation metrics. This can be set to any word')
     parser.add_argument('--loader', type=str, required=True, help='The data loader used to load the experimental data. This can be set to UCR, UEA, forecast_csv, forecast_csv_univar, anomaly, or anomaly_coldstart')
     parser.add_argument('--gpu', type=int, default=0, help='The gpu no. used for training and inference (defaults to 0)')
@@ -37,6 +38,7 @@ if __name__ == '__main__':
     parser.add_argument('--seed', type=int, default=None, help='The random seed')
     parser.add_argument('--max-threads', type=int, default=None, help='The maximum allowed number of threads used by this process')
     parser.add_argument('--eval', action="store_true", help='Whether to perform evaluation after training')
+    parser.add_argument('--train', action="store_true", help='Whether to perform training, if not, will load model pretrained on the second dataset')
     parser.add_argument('--irregular', type=float, default=0, help='The ratio of missing observations (defaults to 0)')
     args = parser.parse_args()
     
@@ -108,22 +110,27 @@ if __name__ == '__main__':
         config[f'after_{unit}_callback'] = save_checkpoint_callback(args.save_every, unit)
 
     run_dir = 'training/' + args.dataset + '__' + name_with_datetime(args.run_name)
+    model_dir = 'training/' + args.dataset2 + '__' + name_with_datetime(args.run_name)
     os.makedirs(run_dir, exist_ok=True)
     
     t = time.time()
-    
-    model = TS2Vec(
-        input_dims=train_data.shape[-1],
-        device=device,
-        **config
-    )
-    loss_log = model.fit(
-        train_data,
-        n_epochs=args.epochs,
-        n_iters=args.iters,
-        verbose=True
-    )
-    model.save(f'{run_dir}/model.pkl')
+
+    if args.train:
+        model = TS2Vec(
+            input_dims=train_data.shape[-1],
+            device=device,
+            **config
+        )
+        loss_log = model.fit(
+            train_data,
+            n_epochs=args.epochs,
+            n_iters=args.iters,
+            verbose=True
+        )
+        model.save(f'{run_dir}/model.pkl')
+    else:
+        # load the whole model directly from the directory for the second dataset
+        model = torch.load(f'{model_dir}/model.pkl')
 
     t = time.time() - t
     print(f"\nTraining time: {datetime.timedelta(seconds=t)}\n")

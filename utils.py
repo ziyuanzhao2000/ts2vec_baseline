@@ -71,8 +71,10 @@ def data_dropout(arr, p):
     return res
 
 def name_with_datetime(prefix='default'):
-    now = datetime.now()
-    return prefix + '_' + now.strftime("%Y%m%d_%H%M%S")
+#     now = datetime.now()
+#     return prefix + '_' + now.strftime("%Y%m%d_%H%M%S")
+    return prefix       # to simplify things, we don't timestamp our model,
+                        # so be careful not to overwrite pretrained ones!
 
 def init_dl_program(
     device_name,
