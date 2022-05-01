@@ -11,10 +11,10 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 import numpy as np
 
 def load_baseline(dataset):
-    train_input = np.load(os.path.join('datasets', dataset, 'train_input.npy')).transpose(1,2) # window_len and num_channels dim are exchanged
-    train_output = np.load(os.path.join('datasets', dataset, 'train_output.npy')).transpose(1,2)
-    test_input = np.load(os.path.join('datasets', dataset, 'test_input.npy')).transpose(1,2)
-    test_output = np.load(os.path.join('datasets', dataset, 'test_output.npy')).transpose(1,2)
+    train_input = np.transpose(np.load(os.path.join('datasets', dataset, 'train_input.npy')), axes=(1,2)) # window_len and num_channels dim are exchanged
+    train_output = np.transpose(np.load(os.path.join('datasets', dataset, 'train_output.npy')), axes=(1,2))
+    test_input = np.transpose(np.load(os.path.join('datasets', dataset, 'test_input.npy')), axes=(1,2))
+    test_output = np.transpose(np.load(os.path.join('datasets', dataset, 'test_output.npy')), axes=(1,2))
     return train_input, train_output, test_input, test_output
 
 def load_UCR(dataset):
