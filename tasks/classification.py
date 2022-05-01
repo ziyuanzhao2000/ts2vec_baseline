@@ -3,7 +3,6 @@ import sklearn
 from . import _eval_protocols as eval_protocols
 from sklearn.preprocessing import label_binarize
 from sklearn.metrics import average_precision_score
-import sklearn.metrics
 import torch
 import torch.nn.functional as F
 def eval_classification(model, train_data, train_labels, test_data, test_labels, eval_protocol='linear'):
@@ -54,5 +53,5 @@ def eval_classification(model, train_data, train_labels, test_data, test_labels,
     metrics_dict['F1'] = sklearn.metrics.f1_score(target, pred, average='macro')
     metrics_dict['AUROC'] = sklearn.metrics.roc_auc_score(target_prob, pred_prob, multi_class='ovr')
     metrics_dict['AUPRC'] = sklearn.metrics.average_precision_score(target_prob, pred_prob)
-    print(metrics)
+    print(metrics_dict)
     return y_score, { 'acc': acc, 'auprc': 0 }
