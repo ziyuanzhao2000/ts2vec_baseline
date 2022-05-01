@@ -146,7 +146,7 @@ if __name__ == '__main__':
 
     if args.eval:
         if task_type == 'classification':
-            out, eval_res = tasks.eval_classification(model, train_data, train_labels, test_data, test_labels, eval_protocol='svm')
+            out, eval_res = tasks.eval_classification(model, train_data, train_labels, test_data, test_labels, eval_protocol='linear')
         elif task_type == 'forecasting':
             out, eval_res = tasks.eval_forecasting(model, data, train_slice, valid_slice, test_slice, scaler, pred_lens, n_covariate_cols)
         elif task_type == 'anomaly_detection':
