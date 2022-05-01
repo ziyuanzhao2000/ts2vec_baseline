@@ -50,9 +50,11 @@ if __name__ == '__main__':
     print('Loading data... ', end='')
     if args.loader == 'UCR':
         task_type = 'classification'
+        # dimensions are: train_data - (bs, window_len, nchannels), train_labels = (bs)
+        #                 test_data same as above
         train_data, train_labels, test_data, test_labels = datautils.load_UCR(args.dataset)
-        print(train_data.shape, train_labels.shape, test_data.shape, test_labels.shape)
-        exit(1)
+#         print(train_data.shape, train_labels.shape, test_data.shape, test_labels.shape)
+#         exit(1)
     elif args.loader == 'UEA':
         task_type = 'classification'
         train_data, train_labels, test_data, test_labels = datautils.load_UEA(args.dataset)
@@ -86,7 +88,12 @@ if __name__ == '__main__':
         task_type = 'anomaly_detection_coldstart'
         all_train_data, all_train_labels, all_train_timestamps, all_test_data, all_test_labels, all_test_timestamps, delay = datautils.load_anomaly(args.dataset)
         train_data, _, _, _ = datautils.load_UCR('FordA')
-        
+
+    # this case is added to handle our baseline experiments
+    # the data are read directly from preprocessed numpy files, available upon request
+    elif args.loader == 'baseline':
+        train_data, train_labels, test_data, test_labels = datautils.load_baseline(args.dataset)
+
     else:
         raise ValueError(f"Unknown loader {args.loader}.")
         

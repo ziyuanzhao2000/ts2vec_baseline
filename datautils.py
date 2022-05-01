@@ -8,6 +8,14 @@ import pickle
 from utils import pkl_load, pad_nan_to_target
 from scipy.io.arff import loadarff
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
+import numpy as np
+
+def load_baseline(dataset):
+    train_input = np.load(os.path.join('dataset', dataset, 'train_input.npy')).transpose(1,2) # window_len and num_channels dim are exchanged
+    train_output = np.load(os.path.join('dataset', dataset, 'train_output.npy')).transpose(1,2)
+    test_input = np.load(os.path.join('dataset', dataset, 'test_input.npy')).transpose(1,2)
+    test_output = np.load(os.path.join('dataset', dataset, 'test_output.npy')).transpose(1,2)
+    return train_input, train_output, test_input, test_output
 
 def load_UCR(dataset):
     train_file = os.path.join('datasets/UCR', dataset, dataset + "_TRAIN.tsv")
