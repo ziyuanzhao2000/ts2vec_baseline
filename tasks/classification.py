@@ -35,6 +35,7 @@ def eval_classification(model, train_data, train_labels, test_data, test_labels,
     else:
         y_score = clf.decision_function(test_repr)
     print(train_labels.max())
+    print(train_labels)
     test_labels_onehot = label_binarize(test_labels, classes=np.arange(train_labels.max()+1))
 #     auprc = average_precision_score(test_labels_onehot, y_score)
     print(test_labels_onehot.shape, y_score.shape)
