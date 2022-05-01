@@ -30,10 +30,11 @@ def eval_classification(model, train_data, train_labels, test_data, test_labels,
     clf = fit_clf(train_repr, train_labels)
 
     acc = clf.score(test_repr, test_labels)
-    if eval_protocol == 'linear':
-        y_score = clf.predict_proba(test_repr)
-    else:
-        y_score = clf.decision_function(test_repr)
+#     if eval_protocol == 'linear':
+#         y_score = clf.predict_proba(test_repr)
+#     else:
+#         y_score = clf.decision_function(test_repr)
+    y_score = clf.decision_function(test_repr)
     test_labels_onehot = label_binarize(test_labels, classes=np.arange(train_labels.max()+1))
 #     auprc = average_precision_score(test_labels_onehot, y_score)
     print(test_labels_onehot.shape, y_score.shape)
